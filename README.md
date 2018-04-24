@@ -5,7 +5,7 @@ Resources for running Unity ML agent training in Azure
 - Unity 3D with [ML Agents](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Getting-Started-with-Balance-Ball.md)
 - An Azure account; get [free Azure credits](https://azure.microsoft.com/Credits/Free)!
 - The [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
-- PowerShell; bash support coming very soon
+- [PowerShell](https://github.com/powershell/powershell#get-powershell); bash support coming very soon
 
 ## Quickstart
 1. Get started with Unity 3D ML Agents as described [here](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Getting-Started-with-Balance-Ball.md)
