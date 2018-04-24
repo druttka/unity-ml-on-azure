@@ -11,7 +11,10 @@ Resources for running Unity ML agent training in Azure
 1. Get started with Unity 3D ML Agents as described [here](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Getting-Started-with-Balance-Ball.md)
 1. Build your Unity project for Linux x86_x64 as described [here](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Using-Docker.md)
 1. `az login` and `az account set` to set your account context
-1. Run `scripts/train-on-aci.ps1`; arguments described below
+1. Run the following
+```
+./train-on-aci.ps1 -resourceGroupName {yourResourceGroupName} -location {targetLocation} -storageAccountName {yourStoAcct} -storageShareName {yourFileShareName} -environmentName {yourUnityExeName} -runId {uniqueRunId} -localVolume {pathToUnityBuildOutput}`
+```
 
 ## Details
 `scripts/train-on-aci.ps1` will do the following:
