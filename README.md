@@ -15,7 +15,8 @@ Resources for running Unity ML agent training in Azure
 1. Optionally set the storage account name; a default name is provided based on the current time, but is not guaranteed to be unique
 1. Click `Choose build output` and navigate to your x86_64 build output.
 1. Click `Deploy`; currently the editor only displays what you should run at the command line
-1. Navigate to the `scripts` and run the command provided by the editor, e.g., `.\train-on-aci.ps1 -storageAccountName drunityml20180425 -environmentName 3dball -localVolume C:\code\ml-agents\unity-volume`.
+1. Ensure you are logged into Azure (run `az login`)
+1. Navigate to the `scripts` and run the command provided by the editor, e.g., `.\train-on-aci.ps1 -storageAccountName drunityml20180425 -environmentName 3dball -localVolume C:\code\ml-agents\unity-volume` 
 
 ## Details
 
