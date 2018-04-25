@@ -18,11 +18,14 @@ az login
 ```
 
 ## Details
+
+### PowerShell
 `scripts/train-on-aci.ps1` will do the following:
 - Ensures the existence of a target Azure resource group
 - Ensures the existence of a target Azure storage account and file share
 - Uploads your Unity build to the file share
 - Creates an Azure Container Instance to run the ML training using said Unity build, outputting to said file share
+- For parameters, see comment based help in [train-on-aci.ps1](./scripts/train-on-aci.ps1)
 
-## Parameters
-See comment based help in [train-on-aci.ps1](./scripts/train-on-aci.ps1).
+### Roadmap: Unity Editor Window (in development)
+Currently experimenting with custom editor windows within Unity to streamline the process
