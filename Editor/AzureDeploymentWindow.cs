@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AzureDeploymentWindow : EditorWindow
 {
-	[MenuItem("ML on Azure/Train")]
+    [MenuItem("ML on Azure/Train")]
     static void OnAzureLogin()
     {
         EditorWindow.GetWindow(typeof(AzureDeploymentWindow), false, "Train ML on Azure", true);
@@ -15,17 +15,43 @@ public class AzureDeploymentWindow : EditorWindow
     // 2. This default wouldn't be globally unique at scale
     string storageAccountName = $"unityml{DateTime.Now.ToString("yyyyMMddHHmm")}";
 
+    string environmentFile;
+
+    string cmd;
+
     void OnGUI()
     {
         EditorGUILayout.LabelField("Train ML on Azure", EditorStyles.boldLabel);
-
         storageAccountName = EditorGUILayout.TextField("Storage account name", storageAccountName);
 
-        GUILayout.FlexibleSpace();
+        if (EditorGUILayout.DropdownButton(new GUIContent(environmentFile ?? "Choose build output"), FocusType.Keyboard))
+        {
+            environmentFile = EditorUtility.OpenFilePanel("Select build output", Directory.GetCurrentDirectory(), "x86_64");
+        }
 
+        if (!string.IsNullOrEmpty(cmd))
+        {
+            GUILayout.Label("Run this:");
+
+            var originalWrap = EditorStyles.label.wordWrap;
+            EditorStyles.label.wordWrap = true;
+
+            EditorGUILayout.SelectableLabel(
+                cmd,
+                new GUILayoutOption[]
+                {
+                    GUILayout.ExpandHeight(true),
+                    GUILayout.MinHeight(50)
+                });
+
+            EditorStyles.label.wordWrap = originalWrap;
+        }
+
+        GUILayout.FlexibleSpace();
+        
         if (GUILayout.Button(new GUIContent("Deploy")))
         {
-            GUILayout.Label(storageAccountName);
+            cmd = $".\\train-on-aci.ps1 -storageAccountName {storageAccountName} -environmentName {Path.GetFileNameWithoutExtension(environmentFile)} -localVolume {Path.GetDirectoryName(environmentFile)}";
         }
     }
 }
