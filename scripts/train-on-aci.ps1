@@ -1,3 +1,41 @@
+<#
+  .SYNOPSIS
+  Deploys a Unity 3D environment for ML training in Azure
+
+  .DESCRIPTION
+  This script ensures the presence of Azure resources (e.g., resource group, storage account, file share) and then copies the Unity build output to Azure. It then creates and Azure Container Instance to run the ML training and store the models and summaries in the same Azure File Share.
+
+  .PARAMETER storageAccountName
+  Required. Must be globally unique. This storage account will be used for the Azure File Share to which Unity build output and trained models are published.
+   
+  .PARAMETER environmentName
+  The environment name (e.g., 3dball) to deploy and train. This can be omitted and automatically detected if your build directory only contains one environment.
+
+  .PARAMETER localVolume
+  The local directory which contains the build output (i.e., which contains the .x86_64 file and _Data folder). This can be omitted and automatically detected if the script is run from the build output directory or a parent directory of the build output.
+
+  .PARAMETER runId
+  A run identifier for the training. If omitted, a timestamp of the format YYYYMMddHHmm will be used.
+  
+  .PARAMETER resourceGroupName
+  The name of the Azure resource group. If omitted, this will be defaulted to unityml.
+  
+  .PARAMETER location
+  The target Azure region. If omitted, westus2 is used. Azure Container Instances must be supported in the region; see https://azure.microsoft.com/en-us/global-infrastructure/services/
+  
+  .PARAMETER storageShareName
+  The name of the file share inside the Azure Storage account. Defaults to unityml.
+    
+  .PARAMETER containerImage
+  The Docker container image which contains the python resources to run the training. Defaults to druttka/unity-ml-trainer:latest. To build your own container, see https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Using-Docker.md
+   
+  .EXAMPLE
+  .\train-on-aci.ps1 -storageAccountName "drunityml20180425"
+
+  .LINK
+  https://github.com/druttka/unity-ml-on-azure
+
+#>
 [CmdletBinding()]
 param(
   # TODO: It would be nice if we had a deterministic default here so the user didn't have to worry about it
