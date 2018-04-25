@@ -124,12 +124,15 @@ az storage account create --resource-group $resourceGroupName --name $storageAcc
 $keys = (az storage  account keys list --resource-group $resourceGroupName --account-name $storageAccountName --query "[].value" -o tsv)
 $storageAccountKey = $keys[0]
 az storage share create --name $storageShareName --quota 2048 --account-name $storageAccountName --account-key $storageAccountKey
+
+# TODO: Should we make this more efficient? Include only the required files even if other things exist in the directory? Skip if files already exist and were not changed? Etc.?
 az storage file upload-batch --account-name $storageAccountName --account-key $storageAccountKey --destination $storageShareName --source $localVolume
 
-# TODO: Cleanup when Terminated
+$aciName = "unityml$runId"
+
 az container create `
     --resource-group $resourceGroupName `
-    --name unityml$runId `
+    --name $aciName `
     --location $location `
     --image $containerImage `
     --azure-file-volume-account-name $storageAccountName `
@@ -138,3 +141,6 @@ az container create `
     --azure-file-volume-mount-path /unity-volume `
     --restart-policy OnFailure `
     --command-line "python python/learn.py $environmentName --docker-target-name=unity-volume --train --run-id=$runId"
+
+az container attach --resource-group $resourceGroupName --name $aciName
+az container delete --resource-group $resourceGroupName --name $aciName
