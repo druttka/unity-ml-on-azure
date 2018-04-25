@@ -31,6 +31,8 @@ public class AzureDeploymentWindow : EditorWindow
 
         if (!string.IsNullOrEmpty(cmd))
         {
+            // The intent is that we'd run the process ourselves, either by shelling out to the script or by using Azure SDKs from
+            // within the editor. For now, just learning about custom Unity editor windows, so putting something on the screen.
             GUILayout.Label("Run this:");
 
             var originalWrap = EditorStyles.label.wordWrap;
