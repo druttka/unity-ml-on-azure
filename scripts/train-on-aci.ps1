@@ -143,4 +143,4 @@ az container create `
     --command-line "python python/learn.py $environmentName --docker-target-name=unity-volume --train --run-id=$runId"
 
 az container attach --resource-group $resourceGroupName --name $aciName
-az container delete --resource-group $resourceGroupName --name $aciName
+az container delete --resource-group $resourceGroupName --name $aciName -y
